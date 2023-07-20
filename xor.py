@@ -1,6 +1,10 @@
 import pandas as pd
 from utils.all_utils import prepare_data, save_plot
 from utils.model import Perceptron
+import os
+import logging
+gate = 
+log_dir = "logs"
 def main(data,modelName,plotName,eta,epochs):
     df_XOR = pd.DataFrame(data)
     X, y = prepare_data(df_XOR, target_col="y")
