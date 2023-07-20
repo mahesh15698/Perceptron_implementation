@@ -3,8 +3,14 @@ from utils.all_utils import prepare_data, save_plot
 from utils.model import Perceptron
 import os
 import logging
-gate = 
+gate = "xor gate"
 log_dir = "logs"
+os.makedirs(log_dir,exist_ok=True)
+logging.basicConfig(filename=os.path.join(log_dir,"running_logs.log"),
+                    level=logging.INFO,
+                    format='[%(asctime)s: %(levelname)s: %(module)s]: %(message)s',
+                    filemode='a'
+                    )
 def main(data,modelName,plotName,eta,epochs):
     df_XOR = pd.DataFrame(data)
     X, y = prepare_data(df_XOR, target_col="y")
@@ -23,5 +29,12 @@ if __name__ == "__main__":
     }
     ETA = 0.1 # 0 and 1
     EPOCHS = 10
-    main(data=XOR,modelName="xor.model", plotName="xor.png", eta=ETA,epochs=EPOCHS)
+    try:
+        logging.info(f">>>>> starting training for {gate}>>>>>")
+        main(data=XOR,modelName="xor.model", plotName="xor.png", eta=ETA,epochs=EPOCHS)
+        logging.info(f"<<<<< done training for {gate} <<<<<\n\n")
+    except Exception as e:
+        logging.exception(e)
+        raise e
+    
 
